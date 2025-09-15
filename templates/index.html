@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}" >
+
+    <title>IMURBOT:Web Controller</title>
+  </head>
+  <body>
+    <header> <!-- 머리 -->
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><b>IMURBOT</b></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">HOME
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">INFO</a>
+        </li>
+
+      </ul>
+          <h6 align="center"><br>INCHEON POLYTECH<br>MECHATRONICS</h6>
+    </div>
+  </div>
+</nav>
+    </header>
+
+    <!-- 몸통 -->
+ <main>
+  <div class="container-fluid py-4 text-center">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="border border-secondary rounded p-2 d-flex justify-content-center w-100">
+          <img src="{{ url_for('video_feed') }}"
+               alt="IMURBOT Camera Stream"
+               class="img-fluid w-100 h-50"
+               oncontextmenu="return false;"> </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+
+
+
+
+    <footer> <!-- 발 -->
+      <div class="d-grid gap-2">
+  <button class="btn btn-outline-danger" type="button"><b>FIRE !!</b></button>
+</div>
+      <br>
+  <div class="d-flex justify-content-center gap-5">
+    <div class="d-flex flex-column align-items-center">
+        <div class="align-self-center">
+            <button id='fw' type="button" class="btn btn-outline-secondary">▲</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button id='lf' type="button" class="btn btn-outline-secondary">◀</button>
+            <button id ='bk' type="button" class="btn btn-outline-secondary">▼</button>
+            <button id='rt' type="button" class="btn btn-outline-secondary">▶</button>
+        </div>
+        <p>DC</p>
+    </div>
+ <fieldset>
+      <legend class="mt-4">Function</legend>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Turn on the front LED</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+      </div>
+            <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+      </div>
+    </fieldset>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="align-self-center">
+            <button id='up' type="button" class="btn btn-outline-secondary">▲</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button id='ll' type="button" class="btn btn-outline-secondary">◀</button>
+            <button id='dw' type="button" class="btn btn-outline-secondary">▼</button>
+            <button id='rr' type="button" class="btn btn-outline-secondary">▶</button>
+        </div>
+           <p>SERVO</p>
+    </div>
+ 
+</div>
+
+
+      <hr>
+<fieldset>
+    <legend class="mt-4">MOTOR SPEED</legend>
+    <label for="customRange3" class="form-label">Value: <span id="rangeValue"></span></label>
+    <input type="range" class="form-range" min="50" max="250" step="10" id="customRange3">
+</fieldset>
+<button id="apt" type="submit" class="btn btn-primary">ACCEPT</button>
+
+      <br><br>
+      <div class="alert alert-dismissible alert-warning">
+      <h4 class="alert-heading"><b>Warning: User Responsibility</b></h4>
+      <p class="mb-0">Before pressing the trigger, be sure to check your surroundings. By pressing this button, you accept full responsibility for any and all outcomes.</p>
+      </div>
+
+
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

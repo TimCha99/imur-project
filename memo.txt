@@ -1,0 +1,12 @@
+# hotspot = 10.42.0.1:8000 / pw: 00000218
+핫스팟 끄는 명령어 
+> nmcli connection down Hotspot
+
+핫스팟 키는 명령어
+> nmcli connection up Hotspot
+
+5GHz 대역으로 변경
+> nmcli connection modify Hotspot wifi.band a
+입력 후 핫스팟 재연결!!
+
+웹 HTML/CSS 참고 >> https://bootswatch.com/slate/
