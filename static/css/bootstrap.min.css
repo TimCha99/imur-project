@@ -22,16 +22,14 @@ header {
 }
 
 main {
-
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 45vh; /* 뷰포트(브라우저 창) 높이의 50% */
+  height: 45vh;
 }
 
 
 footer {
-    
     padding: 12px;
     grid-row: 3; 
 }
