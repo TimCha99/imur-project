@@ -59,5 +59,18 @@ void loop() {
       speed = Serial.parseInt();
     }
   }
-  // 
+  /* 
+  for(val; val <= hs_485max; val+=2){
+    pwm.setPWM(hs_485num, 0, val);
+    Serial.println(val);
+    delay(30);
+  }
+
+  for(val; val >= hs_485min; val -= 2){
+    pwm.setPWM(hs_485num, 0, val);
+    Serial.println(val);
+    delay(30);
+  }
+
+   */
 }
