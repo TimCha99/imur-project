@@ -3,6 +3,9 @@ const bkbt = document.getElementById('bk');
 const lfbt = document.getElementById('lf');
 const rtbt = document.getElementById('rt');
 const apt = document.getElementById('apt');
+const svll = document.getElementById('ll');
+const svrr = document.getElementById('rr');
+const qbt = document.getElementById('qq');
 
 const slider = document.getElementById('customRange3');
 const valueDisplay = document.getElementById('rangeValue');
@@ -23,7 +26,7 @@ function sendCommand(state) {
     });
 }
 
-
+// dc motor
 fwbt.addEventListener('mousedown', () => sendCommand('f'));
 bkbt.addEventListener('mousedown', () => sendCommand('b'));
 lfbt.addEventListener('mousedown', () => sendCommand('l'));
@@ -59,5 +62,32 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
+// servo motor
+svll.addEventListener('mousedown', () => sendCommand('x'));
+svrr.addEventListener('mousedown', () => sendCommand('y'));
 
 
+svll.addEventListener('touchstart', () => sendCommand('x'));
+svrr.addEventListener('touchstart', () => sendCommand('y'));
+
+
+[svll, svrr].forEach(btn => {
+    btn.addEventListener('mouseup', () => sendCommand('o'));
+});
+
+[svll, svrr].forEach(btn => {
+    btn.addEventListener('touchend', () => sendCommand('o'));
+});
+
+
+document.addEventListener('keydown', (event) => {
+    if (event.repeat) return; 
+    if (event.key === 'ArrowLeft') sendCommand('x');  
+    if (event.key === 'ArrowRight') sendCommand('y'); 
+});
+
+document.addEventListener('keyup', (event) => {
+    if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        sendCommand('o'); 
+    }
+});

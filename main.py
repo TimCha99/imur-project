@@ -21,7 +21,7 @@ def generate_frames():
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 try:
-    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+    ser = serial.Serial('/dev/ttyACM0' or '/dev/ttyACM1', 9600, timeout=1)
     time.sleep(2)
 except serial.SerialException as e:
     ser = None
