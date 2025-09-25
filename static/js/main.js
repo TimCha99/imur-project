@@ -9,6 +9,7 @@ const upbt = document.getElementById('up');
 const dwbt = document.getElementById('dw');
 const qbt = document.getElementById('qq');
 const firebt = document.getElementById('fire');
+const check1 = document.getElementById('ledcheck');
 
 const slider = document.getElementById('customRange3');
 const valueDisplay = document.getElementById('rangeValue');
@@ -19,6 +20,13 @@ slider.addEventListener('input', () => {
     valueDisplay.textContent = slider.value;
 });
 
+check1.addEventListener('change', () => {
+    if(check1.checked){
+        sendCommand('Y');
+    }else{
+        sendCommand('N');
+    }
+});
 
 
 function sendCommand(state) {
@@ -67,7 +75,7 @@ document.addEventListener('keyup', (event) => {
 
 // servo motor(right, left, up, down)
 qbt.addEventListener('click', ()=> sendCommand('q'));
-firebt.addEventListener('click', ()=> sendCommand('F'));
+firebt.addEventListener('click', ()=> sendCommand('G'));
 
 svll.addEventListener('mousedown', () => sendCommand('x'));
 svrr.addEventListener('mousedown', () => sendCommand('y'));

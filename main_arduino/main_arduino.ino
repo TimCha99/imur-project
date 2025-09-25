@@ -3,15 +3,36 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
-#define head_min 221
-#define head_max 516
+//servo head
+#define head_min 150
+#define head_max 600
 #define head_pin 15
+
+//tilt
+#define tilt_min 180
+#define tilt_max 310
+#define tilt_pin 7
+
+//fire
+#define fire_pistol 570
+#define fire_origin 620
+#define fire_pin 3
+
+
 int val;
+int val_tilt;
+int val_fire;
 bool isMove = false;
 bool moveleft = false;
 bool moveright = false;
+
+bool movetilt = false;
+bool uptilt = false;
+bool downtilt = false;
+
 char cont;
 int location;
+int tiltlocation;
 int reset90degree = (head_min + head_max) / 2;
 
 #define RPWM_l 3
@@ -24,6 +45,7 @@ int reset90degree = (head_min + head_max) / 2;
 #define R_EN_r 12
 #define L_EN_r 13
 
+#define led 2
 int speed = 50;
 
 void setup() {
@@ -32,6 +54,10 @@ void setup() {
   pwm.setPWMFreq(60);
   val = (head_min + head_max) / 2;  // 368
   pwm.setPWM(head_pin, 0, val);
+  val_tilt = tilt_min;
+  pwm.setPWM(tilt_pin, 0, val_tilt);
+  val_fire = fire_origin;
+  pwm.setPWM(fire_pin, 0, val_fire);
   pinMode(LPWM_r, OUTPUT);
   pinMode(RPWM_r, OUTPUT);
   pinMode(R_EN_r, OUTPUT);
@@ -42,15 +68,19 @@ void setup() {
   pinMode(R_EN_l, OUTPUT);
   pinMode(L_EN_l, OUTPUT);
 
+  pinMode(led, OUTPUT);
+
   digitalWrite(R_EN_r, HIGH);
   digitalWrite(L_EN_r, HIGH);
   digitalWrite(R_EN_l, HIGH);
   digitalWrite(L_EN_l, HIGH);
+  digitalWrite(led, HIGH);
 }
 
 void loop() {
   controll();
   moveServo();
+  moveTilt();
 }
 
 
@@ -79,10 +109,53 @@ void controll(){
     }else if(cont == 'o'){
       isMove = false; moveleft = false; moveright = false;
     }else if(cont == 'q'){
-      resetNow();
+      resetNow(); tiltReset();
+    }else if(cont == 'u'){
+      movetilt = true; uptilt = true; downtilt = false;
+    }else if(cont == 'd'){
+      movetilt = true; uptilt = false; downtilt = true;
+    }else if(cont == 'O'){
+      movetilt = false; uptilt = false; downtilt = false;
+    }else if(cont == 'G'){
+      fire_fire();  // DANGER!!!
+    }else if(cont == 'Y'){
+      digitalWrite(led, HIGH);
+    }else if(cont == 'N'){
+      digitalWrite(led, LOW);
     }
   } 
 }
+
+void fire_fire(){  // DANGER!!!
+  for(val_fire; val_fire >= fire_pistol; val_fire -=2){
+    pwm.setPWM(fire_pin, 0, val_fire);
+    delay(15);
+  }
+  val_fire = fire_origin;
+  pwm.setPWM(fire_pin, 0, val_fire);
+}
+
+
+void moveTilt(){
+  if(movetilt && uptilt && !downtilt){
+    if(val_tilt <= tilt_max){
+      val_tilt++;
+      pwm.setPWM(tilt_pin, 0, val_tilt);
+      delay(20);
+    }
+  }else if(movetilt && !uptilt && downtilt){
+    if(val_tilt >= tilt_min){
+      val_tilt--;
+      pwm.setPWM(tilt_pin, 0, val_tilt);
+      delay(20);
+    }
+  }else if(!movetilt && !uptilt && !downtilt){
+    tiltlocation = val_tilt;
+    pwm.setPWM(tilt_pin, 0, tiltlocation);
+  }
+}
+
+
 
 void resetNow(){
   int reset_val = val - reset90degree;
@@ -100,8 +173,12 @@ void resetNow(){
   }
 }
 
-
-
+void tiltReset(){
+  for(val_tilt; val_tilt >= tilt_min; val_tilt-=2){
+    pwm.setPWM(tilt_pin, 0, val_tilt);
+    delay(20);
+  }
+}
 
 
 void moveServo(){
@@ -118,7 +195,7 @@ void moveServo(){
       delay(20);
     }
   }else if(!isMove && !moveleft && !moveright){
-    location = pwm.getPWM(head_pin);
+    location = val;
     pwm.setPWM(head_pin, 0, location);
   }
 }
