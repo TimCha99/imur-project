@@ -3,16 +3,16 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
-#define hs_485min 221
-#define hs_485max 516
-#define hs_485pin 15
+#define head_min 221
+#define head_max 516
+#define head_pin 15
 int val;
 bool isMove = false;
 bool moveleft = false;
 bool moveright = false;
 char cont;
 int location;
-int reset90degree = (hs_485min + hs_485max) / 2;
+int reset90degree = (head_min + head_max) / 2;
 
 #define RPWM_l 3
 #define LPWM_l 9 
@@ -30,8 +30,8 @@ void setup() {
   Serial.begin(9600);
   pwm.begin();
   pwm.setPWMFreq(60);
-  val = (hs_485min + hs_485max) / 2;  // 368
-  pwm.setPWM(hs_485pin, 0, val);
+  val = (head_min + head_max) / 2;  // 368
+  pwm.setPWM(head_pin, 0, val);
   pinMode(LPWM_r, OUTPUT);
   pinMode(RPWM_r, OUTPUT);
   pinMode(R_EN_r, OUTPUT);
@@ -89,12 +89,12 @@ void resetNow(){
   
   if(reset_val < 0){ // -100
     for(val; val <= reset90degree; val+=2){
-      pwm.setPWM(hs_485pin, 0, val);
+      pwm.setPWM(head_pin, 0, val);
       delay(20);
     }
   }else if(reset_val > 0){ // 100
     for(val; val >= reset90degree; val-=2){
-      pwm.setPWM(hs_485pin, 0, val);
+      pwm.setPWM(head_pin, 0, val);
       delay(20);
     }
   }
@@ -106,19 +106,19 @@ void resetNow(){
 
 void moveServo(){
   if(isMove && moveleft && !moveright){
-    if(val >= hs_485min){
+    if(val >= head_min){
       val-=2;
-      pwm.setPWM(hs_485pin, 0, val);
+      pwm.setPWM(head_pin, 0, val);
       delay(20);
     }
   }else if(isMove && !moveleft && moveright){
-    if(val <= hs_485max){
+    if(val <= head_max){
       val+=2;
-      pwm.setPWM(hs_485pin, 0, val);
+      pwm.setPWM(head_pin, 0, val);
       delay(20);
     }
   }else if(!isMove && !moveleft && !moveright){
-    location = pwm.getPWM(hs_485pin);
-    pwm.setPWM(hs_485pin, 0, location);
+    location = pwm.getPWM(head_pin);
+    pwm.setPWM(head_pin, 0, location);
   }
 }

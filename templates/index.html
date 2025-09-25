@@ -57,7 +57,9 @@
 
     <footer> <!-- 발 -->
       <div class="d-grid gap-2">
-  <button class="btn btn-outline-danger" type="button"><b>FIRE !!</b></button>
+  <button id='fire' class="btn btn-outline-danger" type="button"><b>FIRE !!</b></button>
+  <button id='qq' class="btn btn-outline-secondary" type="button"><b>RESET</b></button>
+
 </div>
       <br>
   <div class="d-flex justify-content-center gap-5">
@@ -73,18 +75,18 @@
         <p>DC</p>
     </div>
  <fieldset>
-      <legend class="mt-4">Function</legend>
+      <legend class="mt-4">Setting</legend>
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked="">
         <label class="form-check-label" for="flexSwitchCheckDefault">Turn on the front LED</label>
       </div>
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
-        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Safety Mode</label>
       </div>
-            <div class="form-check form-switch">
+      <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
-        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+        <label class="form-check-label" for="flexSwitchCheckChecked">None</label>
       </div>
     </fieldset>
 

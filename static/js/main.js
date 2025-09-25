@@ -5,7 +5,10 @@ const rtbt = document.getElementById('rt');
 const apt = document.getElementById('apt');
 const svll = document.getElementById('ll');
 const svrr = document.getElementById('rr');
+const upbt = document.getElementById('up');
+const dwbt = document.getElementById('dw');
 const qbt = document.getElementById('qq');
+const firebt = document.getElementById('fire');
 
 const slider = document.getElementById('customRange3');
 const valueDisplay = document.getElementById('rangeValue');
@@ -26,7 +29,7 @@ function sendCommand(state) {
     });
 }
 
-// dc motor
+// dc motor (forward, backward, left, right, speed set-up)
 fwbt.addEventListener('mousedown', () => sendCommand('f'));
 bkbt.addEventListener('mousedown', () => sendCommand('b'));
 lfbt.addEventListener('mousedown', () => sendCommand('l'));
@@ -62,23 +65,36 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-// servo motor
+// servo motor(right, left, up, down)
+qbt.addEventListener('click', ()=> sendCommand('q'));
+firebt.addEventListener('click', ()=> sendCommand('F'));
+
 svll.addEventListener('mousedown', () => sendCommand('x'));
 svrr.addEventListener('mousedown', () => sendCommand('y'));
-
+upbt.addEventListener('mousedown', () => sendCommand('u'));
+dwbt.addEventListener('mousedown', () => sendCommand('d'));
 
 svll.addEventListener('touchstart', () => sendCommand('x'));
 svrr.addEventListener('touchstart', () => sendCommand('y'));
+upbt.addEventListener('touchstart', () => sendCommand('u'));
+dwbt.addEventListener('touchstart', () => sendCommand('d'));
 
 
 [svll, svrr].forEach(btn => {
     btn.addEventListener('mouseup', () => sendCommand('o'));
 });
 
+[upbt, dwbt].forEach(btn => {
+    btn.addEventListener('mouseup', () => sendCommand('O'));
+});
+
 [svll, svrr].forEach(btn => {
     btn.addEventListener('touchend', () => sendCommand('o'));
 });
 
+[upbt, dwbt].forEach(btn => {
+    btn.addEventListener('touchend', () => sendCommand('O'));
+});
 
 document.addEventListener('keydown', (event) => {
     if (event.repeat) return; 
@@ -89,5 +105,17 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
     if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
         sendCommand('o'); 
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.repeat) return; 
+    if (event.key === 'ArrowUp') sendCommand('u');  
+    if (event.key === 'ArrowDown') sendCommand('d'); 
+});
+
+document.addEventListener('keyup', (event) => {
+    if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
+        sendCommand('O'); 
     }
 });

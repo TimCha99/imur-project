@@ -7,7 +7,7 @@ import picamera2
 app = Flask(__name__)
 
 picam2 = picamera2.Picamera2()
-picam2.configure(picam2.create_preview_configuration(main={"size": (640, 480)}))
+picam2.configure(picam2.create_preview_configuration(main={"size": (1280, 720)}))
 picam2.start()
 
 def generate_frames():
@@ -25,7 +25,7 @@ try:
     time.sleep(2)
 except serial.SerialException as e:
     ser = None
-    print(f"시리얼 포트 연결 실패: {e}")
+    print(f"Serial Port Disconnect!!: {e}")
 
 first_connected_ip = None
 
@@ -58,4 +58,4 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='10.42.0.1', port=8000, debug=False)
+    app.run(host='0.0.0.0', port=8000, debug=False)
