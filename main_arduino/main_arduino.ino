@@ -46,7 +46,7 @@ int reset90degree = (head_min + head_max) / 2;
 #define L_EN_r 13
 
 #define led 2
-int speed = 50;
+int speed = 150;
 
 void setup() {
   Serial.begin(9600);
@@ -122,6 +122,9 @@ void controll(){
       digitalWrite(led, HIGH);
     }else if(cont == 'N'){
       digitalWrite(led, LOW);
+    }else if(cont == 'i'){
+      movetilt = false; uptilt = false; downtilt = false;
+      isMove = false; moveright = false; moveleft = false;
     }
   } 
 }
@@ -141,13 +144,13 @@ void moveTilt(){
     if(val_tilt <= tilt_max){
       val_tilt++;
       pwm.setPWM(tilt_pin, 0, val_tilt);
-      delay(20);
+      delay(15);
     }
   }else if(movetilt && !uptilt && downtilt){
     if(val_tilt >= tilt_min){
       val_tilt--;
       pwm.setPWM(tilt_pin, 0, val_tilt);
-      delay(20);
+      delay(15);
     }
   }else if(!movetilt && !uptilt && !downtilt){
     tiltlocation = val_tilt;
@@ -184,15 +187,15 @@ void tiltReset(){
 void moveServo(){
   if(isMove && moveleft && !moveright){
     if(val >= head_min){
-      val-=2;
+      val--;
       pwm.setPWM(head_pin, 0, val);
-      delay(20);
+      delay(15);
     }
   }else if(isMove && !moveleft && moveright){
     if(val <= head_max){
-      val+=2;
+      val++;
       pwm.setPWM(head_pin, 0, val);
-      delay(20);
+      delay(15);
     }
   }else if(!isMove && !moveleft && !moveright){
     location = val;

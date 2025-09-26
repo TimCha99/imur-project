@@ -10,9 +10,12 @@ const dwbt = document.getElementById('dw');
 const qbt = document.getElementById('qq');
 const firebt = document.getElementById('fire');
 const check1 = document.getElementById('ledcheck');
-
+const check2 = document.getElementById('safecheck');
+const check3 = document.getElementById('tracking');
 const slider = document.getElementById('customRange3');
 const valueDisplay = document.getElementById('rangeValue');
+
+let isSafe = true;
 
 valueDisplay.textContent = slider.value;
 
@@ -27,6 +30,21 @@ check1.addEventListener('change', () => {
         sendCommand('N');
     }
 });
+check2.addEventListener('change', ()=> {
+    isSafe = check2.checked;
+});
+
+check3.addEventListener('change', ()=> {
+    const newState = check3.checked ? 'false' : 'true';
+
+    fetch('/tracking', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ state: newState })
+    });
+});
 
 
 function sendCommand(state) {
@@ -37,7 +55,7 @@ function sendCommand(state) {
     });
 }
 
-// dc motor (forward, backward, left, right, speed set-up)
+// dc motor
 fwbt.addEventListener('mousedown', () => sendCommand('f'));
 bkbt.addEventListener('mousedown', () => sendCommand('b'));
 lfbt.addEventListener('mousedown', () => sendCommand('l'));
@@ -73,9 +91,17 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-// servo motor(right, left, up, down)
+// servo motor
 qbt.addEventListener('click', ()=> sendCommand('q'));
-firebt.addEventListener('click', ()=> sendCommand('G'));
+
+firebt.addEventListener('click', () => {
+    if (isSafe === false){
+        sendCommand('G');
+    }else{
+        // NO SHOOTING!
+    }
+});
+       
 
 svll.addEventListener('mousedown', () => sendCommand('x'));
 svrr.addEventListener('mousedown', () => sendCommand('y'));
@@ -117,9 +143,12 @@ document.addEventListener('keyup', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.repeat) return; 
+    if (event.repeat) event.preventDefault(); 
     if (event.key === 'ArrowUp') sendCommand('u');  
     if (event.key === 'ArrowDown') sendCommand('d'); 
+    if(event.key === 'ArrowUp' || event.key === 'ArrowDown'){
+        event.preventDefault();
+    }
 });
 
 document.addEventListener('keyup', (event) => {
